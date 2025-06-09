@@ -97,6 +97,20 @@
             transform: scale(1.05);
         }
         
+        .profile-image {
+            width: 200px;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 6px solid white;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-image:hover {
+            transform: scale(1.05);
+        }
+        
         .lightbox {
             display: none;
             position: fixed;
@@ -164,15 +178,17 @@
         <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-purple-50"></div>
         <div class="relative z-10 text-center px-6 animate-fade-in">
             <div class="mb-8">
-                <div class="w-32 h-32 mx-auto mb-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-4xl font-bold animate-float">
-                    D
-                </div>
+                <img 
+                    src="daf.png" 
+                    alt="Daffa - Graphic Designer" 
+                    class="profile-image mx-auto mb-8 animate-float"
+                />
             </div>
             <h2 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
                 Halo, saya <span class="gradient-text">Daffa</span>
             </h2>
             <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-                Desainer grafis yang berfokus pada estetika dan fungsionalitas untuk menciptakan visual yang memukau.
+                Desainer grafis yang berfokus pada estetika dan fungsionalitas untuk menciptakan visual yang memukau
             </p>
             <div class="flex flex-col sm:flex-row gap-4 justify-center">
                 <a href="#portfolio" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300">
@@ -210,15 +226,15 @@
                 
                 <div class="grid grid-cols-2 gap-6">
                     <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div class="text-3xl font-bold text-indigo-600 mb-2">1+</div>
+                        <div class="text-3xl font-bold text-indigo-600 mb-2">3+</div>
                         <div class="text-gray-600">Tahun Pengalaman</div>
                     </div>
                     <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div class="text-3xl font-bold text-purple-600 mb-2">30+</div>
+                        <div class="text-3xl font-bold text-purple-600 mb-2">50+</div>
                         <div class="text-gray-600">Proyek Selesai</div>
                     </div>
                     <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
-                        <div class="text-3xl font-bold text-pink-600 mb-2">10+</div>
+                        <div class="text-3xl font-bold text-pink-600 mb-2">25+</div>
                         <div class="text-gray-600">Klien Puas</div>
                     </div>
                     <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
@@ -237,7 +253,7 @@
                 <h3 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">Portfolio</h3>
                 <div class="w-24 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto rounded-full mb-4"></div>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto">
-                    Koleksi karya terbaik yang mencerminkan dedikasi dan kreativitas dalam setiap detail.
+                    Koleksi karya terbaik yang mencerminkan dedikasi dan kreativitas dalam setiap detail
                 </p>
             </div>
             
@@ -327,7 +343,7 @@
                         </div>
                         <div>
                             <h4 class="text-lg font-semibold mb-2">Response Time</h4>
-                            <p class="text-gray-600">Membalas dalam 24 jam</p>
+                            <p class="text-gray-600">Biasanya membalas dalam 24 jam</p>
                         </div>
                     </div>
 
