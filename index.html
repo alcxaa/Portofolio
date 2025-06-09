@@ -1,78 +1,497 @@
 <!DOCTYPE html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Portofolio</title>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daffa Design - Portfolio</title>
     <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="bg-gray-50 text-gray-800">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'inter': ['Inter', 'sans-serif'],
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.6s ease-in-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideUp {
+            from { 
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.25);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+        }
+        
+        .portfolio-card {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .portfolio-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .nav-link {
+            position: relative;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .portfolio-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .portfolio-card:hover .portfolio-image {
+            transform: scale(1.05);
+        }
+        
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+        }
+        
+        .lightbox-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+            max-height: 80%;
+            object-fit: contain;
+        }
+        
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body class="font-inter bg-gradient-to-br from-slate-50 via-white to-slate-100 text-gray-800">
+    <!-- Lightbox -->
+    <div id="lightbox" class="lightbox">
+        <span class="close">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="caption" class="text-center text-white mt-4 text-lg"></div>
+    </div>
+
     <!-- Header -->
-    <header class="bg-white shadow-md p-6">
-      <div class="max-w-5xl mx-auto flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Daffa Design</h1>
-        <nav class="space-x-4">
-          <a href="#about" class="hover:underline">Tentang</a>
-          <a href="#portfolio" class="hover:underline">Portofolio</a>
-          <a href="#contact" class="hover:underline">Kontak</a>
-        </nav>
-      </div>
+    <header class="fixed top-0 w-full z-50 glass-effect">
+        <div class="max-w-6xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <h1 class="text-2xl font-bold gradient-text">Daffa Design</h1>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="#about" class="nav-link font-medium hover:text-indigo-600">Tentang</a>
+                    <a href="#portfolio" class="nav-link font-medium hover:text-indigo-600">Portfolio</a>
+                    <a href="#contact" class="nav-link font-medium hover:text-indigo-600">Kontak</a>
+                </nav>
+                <button class="md:hidden p-2">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
     </header>
 
-    <!-- Hero -->
-    <section class="text-center py-20 bg-gradient-to-b from-white to-gray-100">
-      <h2 class="text-4xl font-bold mb-4">Halo, saya Daffa</h2>
-      <p class="text-lg text-gray-600">Desainer grafis yang berfokus pada estetika dan fungsionalitas</p>
-    </section>
-
-    <!-- Tentang Saya -->
-    <section id="about" class="max-w-4xl mx-auto py-16 px-4">
-      <h3 class="text-2xl font-bold mb-4">Tentang Saya</h3>
-      <p class="text-gray-700 leading-relaxed">
-        Saya seorang desainer grafis dengan pengalaman dalam membuat identitas visual, ilustrasi, dan materi promosi. Saya percaya bahwa desain yang baik harus menyampaikan pesan dengan jelas dan menarik secara visual.
-      </p>
-    </section>
-
-    <!-- Portofolio -->
-    <section id="portfolio" class="bg-white py-16 px-4">
-      <div class="max-w-5xl mx-auto">
-        <h3 class="text-2xl font-bold mb-8 text-center">Portofolio</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div class="bg-gray-100 rounded-xl p-4 shadow">
-            <img src="OPEN HOUSE IGS.png" alt="Karya 1" class="rounded-md mb-2" />
-            <p class="text-sm">OPEN HOUSE</p>
-          </div>
-          <div class="bg-gray-100 rounded-xl p-4 shadow">
-            <img src="BURUH IGS.jpg" alt="Karya 2" class="rounded-md mb-2" />
-            <p class="text-sm">IGS DESIGN</p>
-          </div>
-          <div class="bg-gray-100 rounded-xl p-4 shadow">
-            <img src="Quote of the Day Ali.png" alt="Karya 3" class="rounded-md mb-2" />
-            <p class="text-sm">Quote of the Day</p>
-          </div>
+    <!-- Hero Section -->
+    <section class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <div class="absolute inset-0 bg-gradient-to-br from-indigo-50 via-white to-purple-50"></div>
+        <div class="relative z-10 text-center px-6 animate-fade-in">
+            <div class="mb-8">
+                <div class="w-32 h-32 mx-auto mb-8 rounded-full bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-4xl font-bold animate-float">
+                    D
+                </div>
+            </div>
+            <h2 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                Halo, saya <span class="gradient-text">Daffa</span>
+            </h2>
+            <p class="text-xl md:text-2xl text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+                Desainer grafis yang berfokus pada estetika dan fungsionalitas untuk menciptakan visual yang memukau
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#portfolio" class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                    Lihat Karya Saya
+                </a>
+                <a href="#contact" class="border-2 border-indigo-600 text-indigo-600 px-8 py-4 rounded-full font-semibold hover:bg-indigo-600 hover:text-white transition-all duration-300">
+                    Hubungi Saya
+                </a>
+            </div>
         </div>
-      </div>
+        
+        <!-- Floating Elements -->
+        <div class="absolute top-20 left-10 w-20 h-20 bg-gradient-to-br from-pink-400 to-red-400 rounded-full opacity-20 animate-float"></div>
+        <div class="absolute bottom-20 right-10 w-16 h-16 bg-gradient-to-br from-blue-400 to-indigo-400 rounded-full opacity-20 animate-float" style="animation-delay: -2s;"></div>
+        <div class="absolute top-1/2 left-20 w-12 h-12 bg-gradient-to-br from-green-400 to-blue-400 rounded-full opacity-20 animate-float" style="animation-delay: -4s;"></div>
     </section>
 
-    <!-- Kontak -->
-    <section id="contact" class="bg-gray-100 py-16 px-4">
-      <div class="max-w-3xl mx-auto">
-        <h3 class="text-2xl font-bold mb-4 text-center">Kontak</h3>
-        <form class="space-y-4">
-          <input type="text" placeholder="Nama" class="w-full p-3 rounded border border-gray-300" />
-          <input type="email" placeholder="Email" class="w-full p-3 rounded border border-gray-300" />
-          <textarea placeholder="Pesan" rows="4" class="w-full p-3 rounded border border-gray-300"></textarea>
-          <button type="submit" class="bg-black text-white px-6 py-3 rounded hover:bg-gray-800">Kirim</button>
-        </form>
-        <div class="mt-6 text-center text-gray-600">
-          atau hubungi saya di <a href="mailto:daffaakbar08d@gmail.com" class="underline">daffaakbar08d@gmail.com</a>
+    <!-- About Section -->
+    <section id="about" class="py-20 px-6">
+        <div class="max-w-4xl mx-auto animate-slide-up">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">Tentang Saya</h3>
+                <div class="w-24 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto rounded-full"></div>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-6">
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Saya seorang desainer grafis dengan pengalaman dalam membuat identitas visual, ilustrasi, dan materi promosi yang memukau. Dengan passion yang mendalam terhadap seni visual, saya percaya bahwa desain yang baik harus menyampaikan pesan dengan jelas dan menarik secara visual.
+                    </p>
+                    <p class="text-lg text-gray-700 leading-relaxed">
+                        Setiap proyek adalah kesempatan untuk menciptakan sesuatu yang unik dan bermakna, menggabungkan kreativitas dengan strategi untuk menghasilkan karya yang tidak hanya indah dipandang, tetapi juga efektif dalam menyampaikan pesan.
+                    </p>
+                </div>
+                
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-3xl font-bold text-indigo-600 mb-2">3+</div>
+                        <div class="text-gray-600">Tahun Pengalaman</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-3xl font-bold text-purple-600 mb-2">50+</div>
+                        <div class="text-gray-600">Proyek Selesai</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-3xl font-bold text-pink-600 mb-2">25+</div>
+                        <div class="text-gray-600">Klien Puas</div>
+                    </div>
+                    <div class="bg-white p-6 rounded-2xl shadow-lg hover:shadow-xl transition-shadow duration-300">
+                        <div class="text-3xl font-bold text-green-600 mb-2">24/7</div>
+                        <div class="text-gray-600">Dukungan</div>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
+    </section>
+
+    <!-- Portfolio Section -->
+    <section id="portfolio" class="py-20 px-6 bg-gradient-to-br from-gray-50 to-white">
+        <div class="max-w-6xl mx-auto">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">Portfolio</h3>
+                <div class="w-24 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto rounded-full mb-4"></div>
+                <p class="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Koleksi karya terbaik yang mencerminkan dedikasi dan kreativitas dalam setiap detail
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Open House Design -->
+                <div class="portfolio-card bg-white rounded-3xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/OPEN%20HOUSE%20IGS-IJ3KQ2f3y2sjN6FlaozHHgO21fPVOJ.png', 'Open House SMK SAHID Jakarta')">
+                    <div class="overflow-hidden">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/OPEN%20HOUSE%20IGS-IJ3KQ2f3y2sjN6FlaozHHgO21fPVOJ.png" alt="Open House SMK SAHID Jakarta" class="portfolio-image">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Open House SMK SAHID</h4>
+                        <p class="text-gray-600 mb-4">Desain promosi untuk acara open house sekolah dengan konsep modern dan informatif, menampilkan agenda lengkap dan detail acara</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-sm">Event Design</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Educational</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Labor Day Design -->
+                <div class="portfolio-card bg-white rounded-3xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/BURUH%20IGS.jpg-MYMqD9UeeRZ9Zfptq0L9DBtkExfnaL.jpeg', 'Happy Labor Day - Vasaka Hotel Jakarta')">
+                    <div class="overflow-hidden">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/BURUH%20IGS.jpg-MYMqD9UeeRZ9Zfptq0L9DBtkExfnaL.jpeg" alt="Happy Labor Day - Vasaka Hotel Jakarta" class="portfolio-image">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Happy Labor Day</h4>
+                        <p class="text-gray-600 mb-4">Kampanye visual untuk hari buruh dengan representasi beragam profesi, menampilkan unity dan apresiasi terhadap para pekerja</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-red-100 text-red-800 rounded-full text-sm">Social Campaign</span>
+                            <span class="px-3 py-1 bg-blue-100 text-blue-800 rounded-full text-sm">Corporate</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Quote of the Day -->
+                <div class="portfolio-card bg-white rounded-3xl overflow-hidden shadow-lg cursor-pointer" onclick="openLightbox('https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Quote%20of%20the%20Day%20Ali-IEh3zJQzoZUgvAuUd3wbMMjNxbNdY3.png', 'Quote of the Day - Muhammad Ali')">
+                    <div class="overflow-hidden">
+                        <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Quote%20of%20the%20Day%20Ali-IEh3zJQzoZUgvAuUd3wbMMjNxbNdY3.png" alt="Quote of the Day - Muhammad Ali" class="portfolio-image">
+                    </div>
+                    <div class="p-6">
+                        <h4 class="text-xl font-semibold mb-2">Quote of the Day</h4>
+                        <p class="text-gray-600 mb-4">Desain inspiratif untuk quote harian Muhammad Ali dengan tipografi yang elegan dan layout yang clean dan mudah dibaca</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full text-sm">Typography</span>
+                            <span class="px-3 py-1 bg-green-100 text-green-800 rounded-full text-sm">Inspiration</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <button class="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300">
+                    Lihat Semua Karya
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-6 bg-gradient-to-br from-indigo-50 to-purple-50">
+        <div class="max-w-4xl mx-auto">
+            <div class="text-center mb-16">
+                <h3 class="text-4xl md:text-5xl font-bold mb-6 gradient-text">Mari Berkolaborasi</h3>
+                <div class="w-24 h-1 bg-gradient-to-r from-indigo-600 to-purple-600 mx-auto rounded-full mb-4"></div>
+                <p class="text-xl text-gray-600">
+                    Punya proyek menarik? Mari diskusikan bagaimana kita bisa mewujudkannya bersama
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="space-y-8">
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-full flex items-center justify-center text-white">
+                            📧
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold mb-2">Email</h4>
+                            <a href="mailto:daffaakbar08d@gmail.com" class="text-indigo-600 hover:underline">
+                                daffaakbar08d@gmail.com
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-green-500 to-blue-600 rounded-full flex items-center justify-center text-white">
+                            💬
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold mb-2">Response Time</h4>
+                            <p class="text-gray-600">Biasanya membalas dalam 24 jam</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-red-600 rounded-full flex items-center justify-center text-white">
+                            🎨
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold mb-2">Layanan</h4>
+                            <p class="text-gray-600">Branding, Event Design, Social Media, Typography</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <form class="bg-white rounded-3xl p-8 shadow-xl space-y-6">
+                    <div>
+                        <input 
+                            type="text" 
+                            placeholder="Nama Lengkap" 
+                            class="w-full p-4 rounded-2xl border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 outline-none"
+                        />
+                    </div>
+                    <div>
+                        <input 
+                            type="email" 
+                            placeholder="Alamat Email" 
+                            class="w-full p-4 rounded-2xl border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 outline-none"
+                        />
+                    </div>
+                    <div>
+                        <select class="w-full p-4 rounded-2xl border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 outline-none">
+                            <option>Pilih Jenis Proyek</option>
+                            <option>Branding & Logo</option>
+                            <option>Event Design</option>
+                            <option>Social Media Design</option>
+                            <option>Print Design</option>
+                            <option>Typography Design</option>
+                            <option>Lainnya</option>
+                        </select>
+                    </div>
+                    <div>
+                        <textarea 
+                            placeholder="Ceritakan tentang proyek Anda..." 
+                            rows="5" 
+                            class="w-full p-4 rounded-2xl border border-gray-200 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 transition-all duration-300 outline-none resize-none"
+                        ></textarea>
+                    </div>
+                    <button 
+                        type="submit" 
+                        class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white py-4 rounded-2xl font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300"
+                    >
+                        Kirim Pesan
+                    </button>
+                </form>
+            </div>
+        </div>
     </section>
 
     <!-- Footer -->
-    <footer class="text-center text-sm text-gray-500 py-6">
-      &copy; 2025 Alca Design. Semua hak dilindungi.
+    <footer class="bg-gray-900 text-white py-12 px-6">
+        <div class="max-w-6xl mx-auto">
+            <div class="grid md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h4 class="text-2xl font-bold gradient-text mb-4">Daffa Design</h4>
+                    <p class="text-gray-400 leading-relaxed">
+                        Menciptakan desain yang tidak hanya indah, tetapi juga bermakna dan efektif dalam menyampaikan pesan Anda.
+                    </p>
+                </div>
+                
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Layanan</h5>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Branding & Logo</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Event Design</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Social Media Design</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Typography Design</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h5 class="text-lg font-semibold mb-4">Kontak</h5>
+                    <div class="space-y-2 text-gray-400">
+                        <p>daffaakbar08d@gmail.com</p>
+                        <div class="flex space-x-4 mt-4">
+                            <a href="#" class="w-10 h-10 bg-indigo-600 rounded-full flex items-center justify-center hover:bg-indigo-700 transition-colors">
+                                <span class="text-sm">IG</span>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-blue-600 rounded-full flex items-center justify-center hover:bg-blue-700 transition-colors">
+                                <span class="text-sm">FB</span>
+                            </a>
+                            <a href="#" class="w-10 h-10 bg-pink-600 rounded-full flex items-center justify-center hover:bg-pink-700 transition-colors">
+                                <span class="text-sm">DR</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Daffa Design. Semua hak dilindungi undang-undang.</p>
+            </div>
+        </div>
     </footer>
-  </body>
+
+    <script>
+        // Lightbox functionality
+        function openLightbox(src, caption) {
+            const lightbox = document.getElementById('lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const captionText = document.getElementById('caption');
+            
+            lightbox.style.display = 'block';
+            lightboxImg.src = src;
+            captionText.innerHTML = caption;
+        }
+
+        // Close lightbox
+        document.querySelector('.close').onclick = function() {
+            document.getElementById('lightbox').style.display = 'none';
+        }
+
+        // Close lightbox when clicking outside the image
+        document.getElementById('lightbox').onclick = function(e) {
+            if (e.target === this) {
+                this.style.display = 'none';
+            }
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.25)';
+            }
+        });
+
+        // Form submission
+        document.querySelector('form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Terima kasih! Pesan Anda telah terkirim. Saya akan segera menghubungi Anda.');
+        });
+
+        // Add keyboard navigation for lightbox
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                document.getElementById('lightbox').style.display = 'none';
+            }
+        });
+    </script>
+</body>
 </html>
